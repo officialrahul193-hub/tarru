@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tarru — Send any size, straight across</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">⟶</span>
+      <span class="brand-name">Tarru</span>
+    </div>
+    <p class="brand-tag">device to device · no upload · no limit</p>
+  </header>
+
+  <main id="app">
+
+    <!-- HOME -->
+    <section id="view-home" class="view active">
+      <div class="hero">
+        <h1>Your file never touches our servers.<br>It goes <em>straight across</em>.</h1>
+        <p class="sub">Pick a file of any size. Get a link. Send it. The transfer runs directly between the two devices, so there's no storage cap, no compression, and no waiting for an upload bar to finish before the other person can even start downloading.</p>
+      </div>
+
+      <div id="dropzone" class="dropzone">
+        <input type="file" id="fileInput" hidden />
+        <div class="dropzone-inner">
+          <div class="dz-icon">＋</div>
+          <p class="dz-title">Drop a file here, or tap to choose</p>
+          <p class="dz-hint">Video, ZIP, RAW footage, anything — size has no ceiling here.</p>
+        </div>
+      </div>
+
+      <div id="selectedFile" class="selected-file hidden">
+        <div class="sf-info">
+          <p class="sf-name" id="sfName"></p>
+          <p class="sf-size" id="sfSize"></p>
+        </div>
+        <button id="sfRemove" class="text-btn">remove</button>
+      </div>
+
+      <button id="createLinkBtn" class="primary-btn" disabled>Create link</button>
+
+      <div class="howitworks">
+        <div class="step">
+          <span class="step-num">01</span>
+          <p>You pick a file. We open a direct line between your device and the receiver's — nothing is copied to a server.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <p>You share one link. It only works once both of you are online at the same time, like a phone call.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <p>The file streams across in chunks straight into their downloads. No size cap, because nothing sits in storage.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WAITING FOR RECEIVER (sender side) -->
+    <section id="view-waiting" class="view">
+      <div class="status-card">
+        <div class="pulse-dot"></div>
+        <h2>Link is live</h2>
+        <p class="muted">Share this with the person you're sending to. Keep this tab open — the transfer starts the moment they open it.</p>
+
+        <div class="link-box">
+          <input type="text" id="shareLink" readonly />
+          <button id="copyLinkBtn" class="ghost-btn">Copy</button>
+        </div>
+
+        <p class="waiting-line" id="waitingLine">Waiting for the other device to connect…</p>
+        <button id="cancelSendBtn" class="text-btn danger">cancel</button>
+      </div>
+    </section>
+
+    <!-- RECEIVER JOINING -->
+    <section id="view-receive" class="view">
+      <div class="status-card">
+        <h2 id="receiveTitle">Connecting…</h2>
+        <p class="muted" id="receiveSub">Linking up with the sender's device.</p>
+        <div id="incomingFileBox" class="incoming-file hidden">
+          <p class="if-name" id="ifName"></p>
+          <p class="if-size" id="ifSize"></p>
+        </div>
+        <div id="progressWrap" class="progress-wrap hidden">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <p class="progress-label" id="progressLabel">0%</p>
+        </div>
+        <button id="downloadBtn" class="primary-btn hidden">Download file</button>
+      </div>
+    </section>
+
+    <!-- TRANSFER IN PROGRESS (sender side) -->
+    <section id="view-sending" class="view">
+      <div class="status-card">
+        <h2>Sending…</h2>
+        <p class="muted">Keep this tab open until it finishes.</p>
+        <div class="progress-wrap">
+          <div class="progress-track"><div class="progress-fill" id="sendProgressFill"></div></div>
+          <p class="progress-label" id="sendProgressLabel">0%</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DONE -->
+    <section id="view-done" class="view">
+      <div class="status-card">
+        <div class="check">✓</div>
+        <h2 id="doneTitle">Transfer complete</h2>
+        <p class="muted" id="doneSub"></p>
+        <button id="restartBtn" class="primary-btn">Send another file</button>
+      </div>
+    </section>
+
+    <!-- ERROR -->
+    <section id="view-error" class="view">
+      <div class="status-card">
+        <h2>Something went wrong</h2>
+        <p class="muted" id="errorMsg">This link isn't valid anymore.</p>
+        <button id="errorRestartBtn" class="primary-btn">Start over</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footnote">
+    <p>Both devices need to stay online during the transfer — there's no server in between to hold the file for later.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
